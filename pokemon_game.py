@@ -1,5 +1,5 @@
 # to access the class
-from pokedex import pokedex
+from poke_classes import pokedex
 
 your_dex = pokedex()
 opp_dex = pokedex()
