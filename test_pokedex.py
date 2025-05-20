@@ -1,8 +1,8 @@
-from poke_classes import Pokedex
-print(Pokedex)
+from poke_classes import pokedex
+print(pokedex)
 
 # pokedex creation
-ash = Pokedex()
+ash = pokedex()
 ash.catch("pikachu")
 ash.catch("bulbasaur")
 ash.show_pokemon()

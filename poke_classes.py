@@ -1,5 +1,5 @@
 # pokedex class (manages pokemon that you have)
-class Pokedex:
+class pokedex:
     def __init__ (self):
         # names of possible pokemon
         self.pokemon = ['bulbasaur','charmander','squirtle','pikachu']
@@ -18,7 +18,7 @@ class Pokedex:
         print('you have caught:')
         for i, owned in enumerate(self.owned):
             if owned == 1:
-                print('\n', self.pokemon[i])
+                print(self.pokemon[i])
 
     def all_pokemon(self):
         print('all pokemon:')
