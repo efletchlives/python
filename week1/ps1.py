@@ -94,7 +94,6 @@ y = np.array(y_list)
 print("f) elements retrieved:",np.size(y)) 
 # first time: 266869 
 # second time: 266818
-# explain in report
 
 
 
