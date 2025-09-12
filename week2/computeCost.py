@@ -7,6 +7,7 @@ def computeCost(X, y, θ):
     ones = np.ones((m,1))
     X = np.hstack((ones, X)) # merge X0 and rest of X
 #  m x (n + 1)
+
     θ = np.transpose(θ)
 # (n + 1) x 1
     Xθ = np.matmul(X,θ) # find h(x)

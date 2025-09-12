@@ -30,7 +30,7 @@ print('J(iii):',J)
 
 
 # compute gradient descent solution to linear regression
-[θ, J] = gradientDescent(X_train, y_train, alpha, iters)
+# [θ, J] = gradientDescent.gradientDescent(X_train, y_train, alpha, iters)
 
 # compute closed-form solution to linear regression using normal equation
 # [θ] = normalEqn(X_train, y_train) 
