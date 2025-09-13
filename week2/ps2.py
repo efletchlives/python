@@ -239,14 +239,12 @@ plot.close()
 print('θ:\n',θ)
 
 # c) predict the CO2 emission
+# standardize new sample
+X_test = np.array([2100,1200])
+X_test = (X_test - X_mean)/X_std
+# [X1, X2]
 
-
-
-# compute cost function
-# J = computeCost(X, y, θ)
-
-# compute gradient descent solution to linear regression
-# [θ, J] = gradientDescent(X_train, y_train, alpha, iters)
-
-# compute closed-form solution to linear regression using normal equation
-# [θ] = normalEqn(X_train, y_train)
+# using calculate θ values, predict CO2 emission
+CO2 = θ[0] + θ[1]*X_test[0] + θ[2]*X_test[1]
+CO2 = CO2.item()
+print('\nmy CO2 emissions prediction:',CO2)
