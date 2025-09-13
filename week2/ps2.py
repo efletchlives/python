@@ -65,7 +65,7 @@ plot.figure()
 plot.plot(X_og,y_og,'x',color='orange')
 plot.xlabel('horsepower of each car (in 100s hp)')
 plot.ylabel('prices of automobiles (in $1,000s)')
-plot.savefig('ps2-4-b.png')
+plot.savefig('/workspaces/python/week2/ps2-4-b.png')
 plot.close()
 
 # c) include X0 in X matrix and output size of X & y
@@ -105,7 +105,7 @@ plot.figure()
 plot.plot(iters_plot,J,'g-')
 plot.xlabel('iteration #')
 plot.ylabel('cost')
-plot.savefig('ps2-4-e.png')
+plot.savefig('/workspaces/python/week2/ps2-4-e.png')
 plot.close()
 
 # f) plot the line for the learned model (y = θ0 + θ1*x)
@@ -123,7 +123,7 @@ plot.title('learned model with scattered data')
 plot.xlabel('horsepower of each car (in 100s hp)')
 plot.ylabel('prices of automobiles (in $1,000s)')
 plot.legend()
-plot.savefig('ps2-4-f.png')
+plot.savefig('/workspaces/python/week2/ps2-4-f.png')
 plot.close()
 
 # g) compute cost using obtained model parameters from e
@@ -151,7 +151,7 @@ plot.title('cost function for alpha = 0.001')
 plot.xlabel('iteration #')
 plot.ylabel('cost')
 plot.annotate('too small of an alpha value,\ndoesn\'t converge fast enough',xy=(150,80),xytext=(150,80))
-plot.savefig('ps2-4-i-1.png')
+plot.savefig('/workspaces/python/week2/ps2-4-i-1.png')
 plot.close()
 
 # second iteration: alpha = 0.003
@@ -162,7 +162,7 @@ plot.title('cost function for alpha = 0.003')
 plot.xlabel('iteration #')
 plot.ylabel('cost')
 plot.annotate('closer to a good alpha value,\nstill doesn\'t converge fast enough',xy=(100,40),xytext=(100,80))
-plot.savefig('ps2-4-i-2.png')
+plot.savefig('/workspaces/python/week2/ps2-4-i-2.png')
 plot.close()
 
 # third iteration: alpha = 0.03
@@ -173,25 +173,74 @@ plot.title('cost function for alpha = 0.03')
 plot.xlabel('iteration #')
 plot.ylabel('cost')
 plot.annotate('very good alpha value,\nconverges fast enough',xy=(30,21),xytext=(30,60))
-plot.savefig('ps2-4-i-3.png')
+plot.savefig('/workspaces/python/week2/ps2-4-i-3.png')
 plot.close()
 
-# fourth iteration: alpha = 3
-[θ, J] = gradientDescent.gradientDescent(X_train, y_train, 3, iters)
-plot.figure()
-plot.plot(iters_plot,J,'g-')
-plot.title('cost function for alpha = 3')
-plot.xlabel('iteration #')
-plot.ylabel('cost')
-plot.annotate('diverges and causes runtime warning\nbecause it overshoots the minimum',xy=(0,1e307),xytext=(75,5e307))
-plot.savefig('ps2-4-i-4.png')
-plot.close()
+# fourth iteration: alpha = 3 (causes runtime errors since it diverges)
+# [θ, J] = gradientDescent.gradientDescent(X_train, y_train, 3, iters)
+# plot.figure()
+# plot.plot(iters_plot,J,'g-')
+# plot.title('cost function for alpha = 3')
+# plot.xlabel('iteration #')
+# plot.ylabel('cost')
+# plot.annotate('diverges and causes runtime warning\nbecause it overshoots the minimum',xy=(0,1e307),xytext=(75,1e307))
+# plot.savefig('/workspaces/python/week2/ps2-4-i-4.png')
+# plot.close()
 
 
 # 5.
-# import csv data for linear regression with multiple variables 
-# X = np.loadtxt('hw2_data3.csv',usecols=(0,1))
-# y = np.loadtxt('hw2_data3.csv',usecols=2)
+# a) import + load csv data, then standardize
+print('\n5.')
+print('\na:')
+data = np.loadtxt('/workspaces/python/week2/hw2_data3.csv',delimiter=',')
+X = data[:,[0,1]]
+y = data[:,[2]]
+
+# standardize X data
+X_mean = np.mean(X, axis=0)
+print('mean of X col 0:',X_mean[0])
+print('mean of X col 1:',X_mean[1])
+
+X_std = np.std(X, axis=0)
+print('standard deviation of X col 0:',X_std[0])
+print('standard deviation of X col 1:',X_std[1])
+X_stand = (X - X_mean)/X_std
+X = X_stand
+
+# add X0 to the X matrix
+m = np.size(X,0) # returns m - # of features
+ones = np.ones((m,1))
+X = np.hstack((ones, X)) # merge X0 and rest of X
+#  m x (n + 1)
+
+# print size of X & y
+m, n = X.shape
+print('\nsize of X:',m,'rows &',n,'cols')
+
+m, n = y.shape
+print('size of y:',m,'rows &',n,'cols')
+
+# b) compute gradient descent solution + plot vector cost that shows cost function for each iteration
+print('\nb:')
+alpha = 0.01
+iters = 750
+[θ, J] = gradientDescent.gradientDescent(X, y, alpha, iters)
+
+# plot cost vs iteration num
+iters_plot = np.arange(1,751,1)
+plot.figure()
+plot.plot(iters_plot,J,'g-')
+plot.title('cost function for alpha = 0.01')
+plot.xlabel('iteration #')
+plot.ylabel('cost')
+plot.savefig('/workspaces/python/week2/ps2-5-b.png')
+plot.close()
+
+print('θ:\n',θ)
+
+# c) predict the CO2 emission
+
+
 
 # compute cost function
 # J = computeCost(X, y, θ)
