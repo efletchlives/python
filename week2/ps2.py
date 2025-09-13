@@ -56,11 +56,13 @@ print('θ:\n',θ)
 print('\n4.')
 # a) import csv data for linear regression with one variable
 data = np.loadtxt('/workspaces/python/week2/hw2_data1.csv', delimiter=',')
-X = data[:,[0]]
-y = data[:,[1]]
+X_og = data[:,[0]]
+y_og = data[:,[1]]
+y = y_og
 
 # b) plot the data
-plot.plot(X,y,'rx')
+plot.figure()
+plot.plot(X_og,y_og,'x',color='orange')
 plot.xlabel('horsepower of each car (in 100s hp)')
 plot.ylabel('prices of automobiles (in $1,000s)')
 plot.savefig('ps2-4-b.png')
@@ -69,9 +71,9 @@ plot.close()
 # c) include X0 in X matrix and output size of X & y
 
 # add X0 to the X matrix
-m = np.size(X,0) # returns m - # of features
+m = np.size(X_og,0) # returns m - # of features
 ones = np.ones((m,1))
-X = np.hstack((ones, X)) # merge X0 and rest of X
+X = np.hstack((ones, X_og)) # merge X0 and rest of X
 #  m x (n + 1)
 
 # print size of X & y
@@ -92,16 +94,99 @@ X_train = X[idx_train]
 y_train = y[idx_train]
 X_test = X[idx_test]
 y_test = y[idx_test]
+
+# e) compute gradient descent and plot the vector cost
 alpha = 0.3
 iters = 500
-
 [θ, J] = gradientDescent.gradientDescent(X_train, y_train, alpha, iters)
 
 iters_plot = np.arange(1,501,1)
-plot.plot(iters_plot,J)
+plot.figure()
+plot.plot(iters_plot,J,'g-')
 plot.xlabel('iteration #')
 plot.ylabel('cost')
 plot.savefig('ps2-4-e.png')
+plot.close()
+
+# f) plot the line for the learned model (y = θ0 + θ1*x)
+plot.figure()
+plot.plot(X_og,y_og,'x',color='orange',label='training data')
+
+# get min and max points on line
+x_pts = [np.min(X_train[:,:]), np.max(X_train[:,:])]
+y_min = θ[0] + θ[1]*x_pts[0]
+y_max = θ[0] + θ[1]*x_pts[1]
+y_pts = [y_min,y_max]
+
+plot.plot(x_pts,y_pts,'c-',label='learned model')
+plot.title('learned model with scattered data')
+plot.xlabel('horsepower of each car (in 100s hp)')
+plot.ylabel('prices of automobiles (in $1,000s)')
+plot.legend()
+plot.savefig('ps2-4-f.png')
+plot.close()
+
+# g) compute cost using obtained model parameters from e
+J = computeCost.computeCost(X_test,y_test,θ)
+print('\ng:')
+print('my prediction error:',J)
+
+# h) use normalEqn function and training dataset
+θ = normalEqn.normalEqn(X_train,y_train)
+J = computeCost.computeCost(X_test,y_test,θ)
+print('\nh:')
+print('my prediction error:',J)
+# using the normalEqn function in h is a very good fit for the obtained model parameters in g
+
+# i) study effect of learning rate
+iters = 300
+iters_plot = np.arange(1,301,1)
+alpha = np.array([0.001,0.003,0.03,3])
+
+# first iteration: alpha = 0.001
+[θ, J] = gradientDescent.gradientDescent(X_train, y_train, 0.001, iters)
+plot.figure()
+plot.plot(iters_plot,J,'g-')
+plot.title('cost function for alpha = 0.001')
+plot.xlabel('iteration #')
+plot.ylabel('cost')
+plot.annotate('too small of an alpha value,\ndoesn\'t converge fast enough',xy=(150,80),xytext=(150,80))
+plot.savefig('ps2-4-i-1.png')
+plot.close()
+
+# second iteration: alpha = 0.003
+[θ, J] = gradientDescent.gradientDescent(X_train, y_train, 0.003, iters)
+plot.figure()
+plot.plot(iters_plot,J,'g-')
+plot.title('cost function for alpha = 0.003')
+plot.xlabel('iteration #')
+plot.ylabel('cost')
+plot.annotate('closer to a good alpha value,\nstill doesn\'t converge fast enough',xy=(100,40),xytext=(100,80))
+plot.savefig('ps2-4-i-2.png')
+plot.close()
+
+# third iteration: alpha = 0.03
+[θ, J] = gradientDescent.gradientDescent(X_train, y_train, 0.03, iters)
+plot.figure()
+plot.plot(iters_plot,J,'g-')
+plot.title('cost function for alpha = 0.03')
+plot.xlabel('iteration #')
+plot.ylabel('cost')
+plot.annotate('very good alpha value,\nconverges fast enough',xy=(30,21),xytext=(30,60))
+plot.savefig('ps2-4-i-3.png')
+plot.close()
+
+# fourth iteration: alpha = 3
+[θ, J] = gradientDescent.gradientDescent(X_train, y_train, 3, iters)
+plot.figure()
+plot.plot(iters_plot,J,'g-')
+plot.title('cost function for alpha = 3')
+plot.xlabel('iteration #')
+plot.ylabel('cost')
+plot.annotate('diverges and causes runtime warning\nbecause it overshoots the minimum',xy=(0,1e307),xytext=(75,5e307))
+plot.savefig('ps2-4-i-4.png')
+plot.close()
+
 
 # 5.
 # import csv data for linear regression with multiple variables 
