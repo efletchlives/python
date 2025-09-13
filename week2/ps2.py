@@ -51,6 +51,7 @@ print('J:\n',J)
 θ = normalEqn.normalEqn(X_train, y_train)
 print('\n3.')
 print('θ:\n',θ)
+print('There is a significant difference between the theta estimates in 2 and 3 because the alpha value is far too small. It isn’t able to make it to super close or at 0 cost. You should increase the value of alpha such that the two approaches give almost the same result.')
 
 # 4.
 print('\n4.')
