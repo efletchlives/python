@@ -197,7 +197,7 @@ data = np.loadtxt('/workspaces/python/week2/hw2_data3.csv',delimiter=',')
 X = data[:,[0,1]]
 y = data[:,[2]]
 
-# standardize X data
+# standardize data
 X_mean = np.mean(X, axis=0)
 print('mean of X col 0:',X_mean[0])
 print('mean of X col 1:',X_mean[1])
