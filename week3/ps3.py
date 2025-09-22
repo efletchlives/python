@@ -3,6 +3,8 @@ import matplotlib.pyplot as plot
 
 # functions
 import sigmoid
+import costFunction
+#import gradFunction
 
 # load data
 print('1.')
@@ -56,4 +58,14 @@ plot.ylabel('gz')
 plot.savefig('/workspaces/python/week3/ps3-1-c.png')
 plot.close()
 
-# compute cost function and gradient
+# compute cost function and gradient descent
+X_toy = np.array([[1,1,0],[1,1,3],[1,3,1],[1,3,4]])
+y_toy = np.array([[0],[1],[0],[1]])
+θ = np.array([1,1,0.9,1.2]).T
+
+J = costFunction.costFunction(θ, X_toy, y_toy)
+#grad = gradFunction.gradFunction(θ, X_toy, y_toy)
+
+
+# J = costFunction.costFunction(θ, X_train, y_train)
+# grad = gradFunction.gradFunction(θ, X_train, y_train)
