@@ -13,5 +13,5 @@ def costFunction(θ,     X,     y):
     # compute cost
     J_mtx = (1/m) * (np.matmul((-1)*y.T,np.log(h_x)) - np.matmul((1-y.T),np.log(1-h_x))) # m x n
     #                           1 x m           m x 1               1 x m           m x 1
-    J = J_mtx
+    J = J_mtx.item()
     return J

@@ -69,15 +69,17 @@ y_toy = np.array([[0],[1],[0],[1]]) # m x 1
 
 J = costFunction.costFunction(θ, X_toy, y_toy)
 grad = gradFunction.gradFunction(θ, X_toy, y_toy)
-print(J)
+print('the cost is',J)
 #print(grad)
 
 # optimize cost function with parameters θ
 print('f.')
 θ = np.array([0,0,0])
 θopt = scipy.optimize.fmin_bfgs(costFunction.costFunction, θ, fprime=gradFunction.gradFunction, args=(X_train, y_train))
-print(θopt)
+print('the optimal parameters of θ are:\n',θopt)
 θ = θopt
+J = costFunction.costFunction(θ,X,y)
+print('the cost at convergence is:',J)
 
 print('g.')
 # get the x and y intercepts for the decision boundary line
@@ -111,16 +113,18 @@ for i in range(size):
         wrong = wrong + 1
     else:
         continue
-accuracy = (size - wrong)/size # it has a 90% accuracy
+accuracy = (size - wrong)/size
+#print(accuracy*100)
 
 print('i.')
 θTx = θ[0] + θ[1]*55 + θ[2]*70
 adm_prob = sigmoid.sigmoid(θTx)
-print(adm_prob) # >0.5 => admitted
+print('the admission probability is',adm_prob) # >0.5 => admitted
+print('the student should be admitted since the probability is > 0.5')
+
 
 print('2)')
 print('a.')
-
 data2 = np.loadtxt('/workspaces/python/week3/hw3_data2.csv',delimiter=',')
 
 n_p_og = data2[:,[0]]
@@ -138,7 +142,7 @@ n_p = np.hstack((ones, n_p)) # merge X0 and rest of X
 n_pTprofit = np.matmul(n_p.T,profit)
 XTXinv = np.linalg.pinv(np.matmul(n_p.T, n_p))
 θ = np.matmul(XTXinv,n_pTprofit)
-print(θ)
+print('the learned model parameters are:\n',θ)
 
 x_pts = np.linspace(500,1000,500)
 y_pts = θ[2] * x_pts**2 + θ[1] * x_pts + θ[0]
