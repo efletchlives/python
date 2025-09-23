@@ -99,7 +99,19 @@ plot.savefig('/workspaces/python/week3/ps3-1-g.png')
 plot.close()
 
 print('h.')
-
+# compare each point to the expected point from the line
+# if lower and 1, then wrong
+# if higher and 0, then wrong
+size = np.size(X_test,0)
+wrong = 0
+for i in range(size):
+    if(X_test[i,2] <= ((-θ[1]*X_test[i,1]-θ[0])/θ[2]) and y_test[i,0] == 1):
+        wrong = wrong + 1
+    elif(X_test[i,2] >= ((-θ[1]*X_test[i,1]-θ[0])/θ[2]) and y_test[i,0] == 0):
+        wrong = wrong + 1
+    else:
+        continue
+accuracy = (size - wrong)/size # it has a 90% accuracy
 
 print('i.')
 θTx = θ[0] + θ[1]*55 + θ[2]*70
@@ -139,10 +151,3 @@ plot.xlabel('population in thousands, n')
 plot.legend()
 plot.savefig('/workspaces/python/week3/ps3-2-b.png')
 plot.close()
-
-
-#grad = gradFunction.gradFunction(θ, X_toy, y_toy)
-
-
-# J = costFunction.costFunction(θ, X_train, y_train)
-# grad = gradFunction.gradFunction(θ, X_train, y_train)
