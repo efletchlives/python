@@ -8,7 +8,7 @@ import costFunction
 import gradFunction
 
 # load data
-print('1.')
+print('1)')
 print('a.')
 data = np.loadtxt('/workspaces/python/week3/hw3_data1.txt',delimiter=',')
 cols = np.size(data, axis=1)
@@ -70,28 +70,77 @@ y_toy = np.array([[0],[1],[0],[1]]) # m x 1
 J = costFunction.costFunction(θ, X_toy, y_toy)
 grad = gradFunction.gradFunction(θ, X_toy, y_toy)
 print(J)
+#print(grad)
 
 # optimize cost function with parameters θ
-print('f')
+print('f.')
 θ = np.array([0,0,0])
-#scipy.optimize.fmin_bfgs(lambda t: costFunction.costFunction(t, X_train, y_train),θ)
-
-
+θopt = scipy.optimize.fmin_bfgs(costFunction.costFunction, θ, fprime=gradFunction.gradFunction, args=(X_train, y_train))
+print(θopt)
+θ = θopt
 
 print('g.')
 # get the x and y intercepts for the decision boundary line
-
+x_pts = [-θ[0]/θ[1],0]
+y_pts = [0,-θ[0]/θ[2]]
 
 plot.figure()
 # plot decision boundary
-#plot.plot()
-plot.scatter(X[admit,0], X[admit,1],marker='+',color='black',label='admitted')
-plot.scatter(X[not_admit,0], X[not_admit,1],marker='o',color='yellow',label='not admitted')
+
+plot.scatter(X[admit,1], X[admit,2],marker='+',color='black',label='admitted')
+plot.scatter(X[not_admit,1], X[not_admit,2],marker='o',color='yellow',label='not admitted')
+plot.plot(x_pts,y_pts,'b-')
 plot.xlabel('exam 1 scores')
 plot.ylabel('exam 2 scores')
+plot.xlim(25,105)
+plot.ylim(25,105)
 plot.legend()
-plot.savefig('/workspaces/python/week3/ps3-1-b.png')
+plot.savefig('/workspaces/python/week3/ps3-1-g.png')
 plot.close()
+
+print('h.')
+
+
+print('i.')
+θTx = θ[0] + θ[1]*55 + θ[2]*70
+adm_prob = sigmoid.sigmoid(θTx)
+print(adm_prob) # >0.5 => admitted
+
+print('2)')
+print('a.')
+
+data2 = np.loadtxt('/workspaces/python/week3/hw3_data2.csv',delimiter=',')
+
+n_p_og = data2[:,[0]]
+n_p_sqr = n_p_og**2
+profit = data2[:,1]
+
+n_p = np.hstack((n_p_og,n_p_sqr))
+
+# add col of ones for bias feature X0
+m = np.size(data2,0) # returns m - # of features
+ones = np.ones((m,1))
+n_p = np.hstack((ones, n_p)) # merge X0 and rest of X
+
+# use normal eqn to find θ parameters
+n_pTprofit = np.matmul(n_p.T,profit)
+XTXinv = np.linalg.pinv(np.matmul(n_p.T, n_p))
+θ = np.matmul(XTXinv,n_pTprofit)
+print(θ)
+
+x_pts = np.linspace(500,1000,500)
+y_pts = θ[2] * x_pts**2 + θ[1] * x_pts + θ[0]
+
+plot.figure()
+plot.plot(x_pts,y_pts,'-',color='green',label='fitted model')
+plot.plot(n_p_og,profit,'o',color='orange',markerfacecolor='none',markeredgecolor='orange',label='training data')
+plot.ylabel('profit')
+plot.xlabel('population in thousands, n')
+plot.legend()
+plot.savefig('/workspaces/python/week3/ps3-2-b.png')
+plot.close()
+
+
 #grad = gradFunction.gradFunction(θ, X_toy, y_toy)
 
 
