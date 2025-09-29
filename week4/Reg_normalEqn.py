@@ -1,5 +1,14 @@
 import numpy as np
 
-def Reg_normalEqn(X_train, y_train, λ):
-    nothing = []
-    return nothing
+def Reg_normalEqn(X, y, λ):
+    XTX = np.matmul(X.T, X)
+
+    # make identity matrix excluding the bias feature in normalizing
+    n = np.size(X,1)
+    id_mtx = np.eye(n)
+    id_mtx[0,0] = 0
+
+    λI = λ * id_mtx
+    XTy = np.matmul(X.T, y)
+
+    return np.linalg.pinv(XTX + λI) @ XTy
