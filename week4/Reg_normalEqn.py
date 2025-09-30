@@ -9,6 +9,5 @@ def Reg_normalEqn(X, y, λ):
     id_mtx[0,0] = 0
 
     λI = λ * id_mtx
-    XTy = np.matmul(X.T, y)
 
-    return np.linalg.pinv(XTX + λI) @ XTy
+    return np.linalg.pinv(XTX + λI) @ X.T @ y

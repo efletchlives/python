@@ -49,6 +49,8 @@ for i in range(20):
     for j in range(8):
         θ = Reg_normalEqn.Reg_normalEqn(X_train, y_train, λ[j])
         #print('parameters for iteration', i, ',', j, 'and λ =',λ[j],':',θ)
+
+        # get training/testing error
         train_error = mse(X_train, y_train, θ)
         test_error = mse(X_test, y_test, θ)
 
@@ -78,11 +80,10 @@ plot.close()
 print('2.')
 
 data2 = scipy.io.loadmat('/workspaces/python/week4/hw4_data2.mat')
-
-
-
-
-
+X_train2 = np.vstack([data2['X1'],data2['X2'],data2['X3'],data2['X5']])
+y_train2 = np.array([data2['y1'],data2['y2'],data2['y3'],data2['y5']])
+X_test2 = np.array(data2['X4'])
+y_test2 = np.array(data2['y4'])
 
 
 
