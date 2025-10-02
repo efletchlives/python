@@ -11,7 +11,7 @@ def mse(X, y, θ):
     m = np.size(y,axis=0)
     return (1/2)*(1/m)*np.sum((y_pre - y)**2)
     
-
+# --------------------------------- Question 1 ------------------------------
 print('1)')
 print('a.')
 # loading in data files
@@ -19,16 +19,19 @@ data1 = scipy.io.loadmat('/workspaces/python/week4/hw4_data1.mat')
 
 print('b.')
 X = np.array(data1['X_data'])
+
+# add bias feature
+m = np.size(X,0) # returns m - # of features
+ones = np.ones((m,1))
+X = np.hstack((ones, X)) # merge X0 and rest of X
+
 m = np.size(X,0)
 n = np.size(X,1)
 print('The size of the feature matrix is', m, 'rows by', n, 'columns.')
 
 y = np.array(data1['y'])
 
-# add bias feature
-m = np.size(X,0) # returns m - # of features
-ones = np.ones((m,1))
-X = np.hstack((ones, X)) # merge X0 and rest of X
+
 
 print('c.')
 λ = np.array([0, 0.001, 0.003, 0.005, 0.007, 0.009, 0.012, 0.017])
@@ -73,17 +76,21 @@ plot.plot(λ, avg_test_mtx, 'b-o', label='testing error')
 plot.xlabel('λ')
 plot.ylabel('average error')
 plot.legend()
-plot.savefig('/workspaces/python/week4/ps4-1-a.png')
+#plot.savefig('/workspaces/python/week4/ps4-1-a.png')
 plot.close()
 
-
+# --------------------------------- Question 2 ------------------------------
 print('2.')
 
 data2 = scipy.io.loadmat('/workspaces/python/week4/hw4_data2.mat')
-X_train2 = np.vstack([data2['X1'],data2['X2'],data2['X3'],data2['X5']])
-y_train2 = np.array([data2['y1'],data2['y2'],data2['y3'],data2['y5']])
+X_train2 = np.hstack(np.array([data2['X1'],data2['X2'],data2['X3'],data2['X5']]))
+y_train2 = np.hstack(np.array([data2['y1'],data2['y2'],data2['y3'],data2['y5']]))
 X_test2 = np.array(data2['X4'])
 y_test2 = np.array(data2['y4'])
+
+rng_arr = np.arange(1,17,2)
+print(rng_arr)
+#for k in rng_arr:
 
 
 

@@ -1,6 +1,7 @@
 import numpy as np
 
 def Reg_normalEqn(X, y, λ):
+    # using closed form solution: θ = (XTX + λI)^-1 * XTy
     XTX = np.matmul(X.T, X)
 
     # make identity matrix excluding the bias feature in normalizing
