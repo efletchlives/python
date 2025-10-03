@@ -12,21 +12,21 @@ def logReg_multi(X_train, y_train, X_test):
     mdl2 = LogisticRegression(random_state=0).fit(X_train,y_2.ravel())
     mdl3 = LogisticRegression(random_state=0).fit(X_train,y_3.ravel())
 
-    train_proba_1 = mdl1.predict_proba(X_train)[:,1]
-    train_proba_2 = mdl2.predict_proba(X_train)[:,1]
-    train_proba_3 = mdl3.predict_proba(X_train)[:,1]
+    train_proba = np.vstack([mdl1.predict_proba(X_train)[:,1], 
+                             mdl2.predict_proba(X_train)[:,1],
+                             mdl3.predict_proba(X_train)[:,1]]).T
 
-    train_proba_1 = np.mean(train_proba_1, axis=0)
-    train_proba_2 = np.mean(train_proba_2, axis=0)
-    train_proba_3 = np.mean(train_proba_3, axis=0)
+    test_proba = np.vstack([mdl1.predict_proba(X_test)[:,1],
+                            mdl2.predict_proba(X_test)[:,1],
+                            mdl3.predict_proba(X_test)[:,1]]).T
 
-    test_proba_1 = mdl1.predict_proba(X_test)[:,1]
-    test_proba_2 = mdl2.predict_proba(X_test)[:,1]
-    test_proba_3 = mdl3.predict_proba(X_test)[:,1]
+    train_pred = np.argmax(train_proba, axis=1) + 1 # 1 for bias
+    test_pred  = np.argmax(test_proba, axis=1) + 1 
 
-    test_proba_1 = np.mean(test_proba_1, axis=0)
-    test_proba_2 = np.mean(test_proba_2, axis=0)
-    test_proba_3 = np.mean(test_proba_3, axis=0)
+    # put in a dictionary for easy access
+    y_pred = {
+        'train_pred': train_pred,
+        'test_pred': test_pred
+    }
 
-    y_pred = np.hstack([[train_proba_1],[train_proba_2],[train_proba_3],[test_proba_1],[test_proba_2],[test_proba_3]])
     return y_pred

@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plot
 import scipy.io
 import sklearn.neighbors as skl
+from sklearn.metrics import accuracy_score
 
 # functions
 import Reg_normalEqn # computes closed form solution to linear regression
@@ -143,4 +144,13 @@ X_test = data3['X_test']
 y_test = data3['y_test']
 
 y_pred = logReg_multi.logReg_multi(X_train, y_train, X_test)
-print(y_pred) # this is not right
+# print(y_pred) for debugging
+
+train_pred = y_pred['train_pred']
+test_pred = y_pred['test_pred']
+train_acc = accuracy_score(y_train, train_pred)
+test_acc = accuracy_score(y_test, test_pred)
+
+print('the training accuracy is:',train_acc)
+print('the testing accuracy is:',test_acc)
+print('the training accuracy is higher than the testing accuracy but the testing accuracy is still quite high.')
