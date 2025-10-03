@@ -143,3 +143,4 @@ X_test = data3['X_test']
 y_test = data3['y_test']
 
 y_pred = logReg_multi.logReg_multi(X_train, y_train, X_test)
+print(y_pred) # this is not right
