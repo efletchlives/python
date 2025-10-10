@@ -23,7 +23,11 @@ def accuracy(test, pred):
 print('1)')
 # print('a.')
 # loading in data files
+<<<<<<< HEAD
 data1 = scipy.io.loadmat('/workspaces/python/week4/hw4_data1.mat')
+=======
+data1 = scipy.io.loadmat('hw4_data1.mat')
+>>>>>>> bee04673b2503d5d12fe38fd427e6e1a895e2932
 
 # print('b.')
 X = np.array(data1['X_data'])
@@ -90,7 +94,11 @@ plot.close()
 # --------------------------------- Question 2 ------------------------------
 print('2.')
 
+<<<<<<< HEAD
 data2 = scipy.io.loadmat('/workspaces/python/week4/hw4_data2.mat')
+=======
+data2 = scipy.io.loadmat('hw4_data2.mat')
+>>>>>>> bee04673b2503d5d12fe38fd427e6e1a895e2932
 
 
 X_folds = [data2['X1'],data2['X2'],data2['X3'],data2['X4'],data2['X5']]
@@ -129,7 +137,11 @@ plot.plot(rng_arr,avg_accuracies,'o-',color='mediumaquamarine')
 plot.xlabel('K')
 plot.ylabel('average accuracy')
 plot.xticks(rng_arr)
+<<<<<<< HEAD
 plot.savefig('/workspaces/python/week4/ps4-2-a.png')
+=======
+plot.savefig('ps4-2-a.png')
+>>>>>>> bee04673b2503d5d12fe38fd427e6e1a895e2932
 
 print('I suggest using k = 9 for this particular problem as it has the highest accuracy.')
 print('This value is not necessarily robust for any other problem as the best k value is dependent on the variance of the data.')
@@ -137,7 +149,7 @@ print('This value is not necessarily robust for any other problem as the best k 
 # --------------------------------- Question 3 ------------------------------
 
 print('3.')
-data3 = scipy.io.loadmat('/workspaces/python/week4/hw4_data3.mat')
+data3 = scipy.io.loadmat('hw4_data3.mat')
 X_train = data3['X_train']
 y_train = data3['y_train']
 X_test = data3['X_test']
