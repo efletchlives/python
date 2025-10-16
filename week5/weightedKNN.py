@@ -9,6 +9,8 @@ def weightedKNN(X_train, y_train, X_test, sigma):
 
     # y_predict = knn_weighted.predict(X_test)
 
-    # do it all locally
+    # can't use knn algorithm, have to make your own
+    
+
     y_predict = []
     return y_predict
