@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score
 
 import weightedKNN
 
+# ------------------------ Question 1 ----------------------------
 
 data3 = scipy.io.loadmat('/workspaces/python/week5/input/hw4_data3.mat')
 X_train = data3['X_train']
