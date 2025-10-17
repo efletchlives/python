@@ -26,6 +26,44 @@ print('weighted KNN accuracy using Euclidean distance:',accuracy)
 
 # ------------------------ Question 2 ----------------------------
 
+# randomizing and organize files in directories (input/all, input/train, input/test)
 import os
+import random
+
+# clear files in the input/train and input/test
+all_path = '/workspaces/python/week5/input/all'
+train_path = '/workspaces/python/week5/input/train'
+test_path = '/workspaces/python/week5/input/test'
+train_imgs = os.listdir(train_path)
+test_imgs = os.listdir(test_path)
+
+for filename in train_imgs:
+    file_path = os.path.join(train_path, filename)
+    os.remove(file_path)
+
+for filename in test_imgs:
+    file_path = os.path.join(test_path, filename)
+    os.remove(file_path)
+
+for i in range(40):
+    train_idx = np.sort(random.sample(range(1,11), 8))
+    test_idx = np.setdiff1d(np.arange(1,11), train_idx)
+    print(train_idx)
+    print(test_idx)
+
+    for j in train_idx:
+        os.path.join(train_path, f"{i}_{j}.pgm")
+
+        os.system(f"cp {all_path}/s{i}/{j}.pgm {train_path}/{i}_{j}.pgm")
+    
+    for j in test_idx:
+        os.path.join(test_path, f"{i}_{j}.pgm")
+
+        os.system(f"cp {all_path}/s{i}/{j}.pgm {test_path}/{i}_{j}.pgm")
 
 
+# ------------------------ Question 2.1 ----------------------------
+
+# a.
+    
+        
