@@ -1,16 +1,24 @@
 import numpy as np
-from sklearn.neighbors import KNeighborsClassifier as knn
+from scipy.spatial.distance import cdist
 
-def weightedKNN(X_train, y_train, X_test, sigma):
-    # n = X_train.shape[0]
+def weightedKNN(X_train,  y_train,   X_test,   sigma):
+#            m x (n + 1)   m x 1   d x (n + 1)
+    samples = np.size(X_test, 0)
+    y_pred = np.zeros((samples, 1))
 
-    # knn_weighted = knn(n_neighbors=n, weights = 'distance', metric = 'euclidean')
-    # knn_weighted.fit(X_train,y_train)
+    d = cdist(X_test, X_train, 'euclidean')
+    w = np.exp(-(d ** 2)/(sigma ** 2))
 
-    # y_predict = knn_weighted.predict(X_test)
+    # sorts the data into classes
+    classes = np.unique(y_train)
 
-    # can't use knn algorithm, have to make your own
-    
+    for i in range(samples):
+        w_vote = []
+        for c in classes:
+            w_i = w[i,:]
+            w_sum = sum((y_train.flatten() == c) * w_i) # gets the weighted sum per class
+            w_vote.append(w_sum)
+        
+        y_pred[i] = classes[np.argmax(w_vote)]
 
-    y_predict = []
-    return y_predict
+    return y_pred

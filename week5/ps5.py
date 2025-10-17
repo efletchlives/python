@@ -15,9 +15,17 @@ y_test = data3['y_test']
 
 
 sigma = np.array([0.01,0.07,0.15,2,4])
-y_predict = weightedKNN.weightedKNN(X_train, y_train, X_test, sigma)
+accuracy = []
+for i in range(5):
+    y_predict = weightedKNN.weightedKNN(X_train, y_train, X_test, sigma[i])
+    accuracy.append(accuracy_score(y_test, y_predict))
 
-accuracy = accuracy_score(y_test, y_predict)
+
 print('weighted KNN accuracy using Euclidean distance:',accuracy)
+
+
+# ------------------------ Question 2 ----------------------------
+
+import os
 
 
