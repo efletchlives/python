@@ -16,6 +16,15 @@ pu_functions.print_base("V_base4",round(V_base4/(1e3),2),"kV")
 V_base6 = 4.16e3 # 4.16kV
 pu_functions.print_base("V_base6",round(V_base6/(1e3),2),"kV")
 
+I_base1 = S_base / (np.sqrt(3) * V_base1)
+pu_functions.print_base("I_base1",round(I_base1/(1e3),3),"kA")
+I_base2 = S_base / (np.sqrt(3) * V_base2)
+pu_functions.print_base("I_base2",round(I_base2/(1e3),3),"kA")
+I_base4 = S_base / (np.sqrt(3) * V_base4)
+pu_functions.print_base("I_base4",round(I_base4/(1e3),3),"kA")
+I_base6 = S_base / (np.sqrt(3) * V_base6)
+pu_functions.print_base("I_base6",round(I_base6/(1e3),3),"kA")
+
 Z_base2 = V_base2**2/(S_base)
 pu_functions.print_base("Z_base2",round(Z_base2),"ohms")
 Z_base4 = V_base4**2/(S_base)
@@ -115,7 +124,13 @@ V2_actual = pu_functions.calc_actualv("V2",230e3,V2_pu)
 V1_actual = pu_functions.calc_actualv("V1",20e3,V1_pu)
 
 # calculate actual currents
-# I6_actual 
+print('')
+I6_actual = pu_functions.calc_actuali("I6",I_base6, I6_pu)
+I5_actual = pu_functions.calc_actuali("I5",I_base4, I6_pu)
+I4_actual = pu_functions.calc_actuali("I4",I_base4, I6_pu)
+I3_actual = pu_functions.calc_actuali("I3",I_base2, I3_pu)
+I2_actual = pu_functions.calc_actuali("I2",I_base2, I3_pu)
+I1_actual = pu_functions.calc_actuali("I1",I_base1, I3_pu)
 
 
 
@@ -168,7 +183,7 @@ pu_functions.calc_ipu("I3_pu", I3_pu)
 pu_functions.calc_ipu("I2_pu", I3_pu)
 pu_functions.calc_ipu("I1_pu", I3_pu)
 
-print('actual voltages:')
+print('\nactual voltages:')
 V6_actual = pu_functions.calc_actualv("V6", 4.16e3, V6_pu)
 V5_actual = pu_functions.calc_actualv("V5", 12.47e3, V5_pu)
 V4_actual = pu_functions.calc_actualv("V4", 230e3, V4_pu)
@@ -223,7 +238,7 @@ pu_functions.calc_ipu("I3_pu", I3_pu)
 pu_functions.calc_ipu("I2_pu", I3_pu)
 pu_functions.calc_ipu("I1_pu", I3_pu)
 
-print('actual voltages:')
+print('\nactual voltages:')
 V6_actual = pu_functions.calc_actualv("V6", 4.16e3, V6_pu)
 V5_actual = pu_functions.calc_actualv("V5", 12.47e3, V5_pu)
 V4_actual = pu_functions.calc_actualv("V4", 230e3, V4_pu)
@@ -278,7 +293,7 @@ pu_functions.calc_ipu("I3_pu", I3_pu)
 pu_functions.calc_ipu("I2_pu", I3_pu)
 pu_functions.calc_ipu("I1_pu", I3_pu)
 
-print('actual voltages:')
+print('\nactual voltages:')
 V6_actual = pu_functions.calc_actualv("V6", 4.16e3, V6_pu)
 V5_actual = pu_functions.calc_actualv("V5", 12.47e3, V5_pu)
 V4_actual = pu_functions.calc_actualv("V4", 230e3, V4_pu)

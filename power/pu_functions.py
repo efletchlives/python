@@ -19,6 +19,11 @@ def calc_actualv(v_name,v_level,Vpu):
     print(f"{v_name} = {round(np.abs(v_actual/1000),3)} < {round(np.angle(v_actual),3)} kV")
     return v_actual
 
+def calc_actuali(I_name,I_base,Ipu):
+    I_actual = I_base * Ipu
+    print(f"{I_name} = {round(np.abs(I_actual/1000),3)} < {round(np.angle(I_actual),3)} kA")
+    return I_actual
+
 def pf_correction(pf_init, correction):
     pfangle_init = np.arccos(pf_init)
 
