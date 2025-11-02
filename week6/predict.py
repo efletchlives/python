@@ -16,4 +16,5 @@ def predict(θ1, θ2, X):
     h_x = a3
 
     p = np.argmax(h_x, axis=1) + 1
+    p = p.reshape(-1,1)
     return p, h_x

@@ -5,6 +5,7 @@ import matplotlib.pyplot as plot
 import os
 
 import predict
+import nnCost
 
 vehicles = ['Airplane','Automobile','Truck']
 
@@ -54,6 +55,12 @@ p, h_x = predict.predict(θ1, θ2, X)
 
 acc = np.mean(p == y_labels) * 100
 print(f"prediction accuracy: {acc:.2f}%")
+
+
+# 2. 
+# a.
+
+J = nnCost.nnCost(θ1, θ2, X, y, K, λ)
 
 
 
