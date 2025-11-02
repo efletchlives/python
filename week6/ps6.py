@@ -2,6 +2,7 @@ import numpy as np
 import scipy.io as scy
 import random
 import matplotlib.pyplot as plot
+import os
 
 import predict
 
@@ -45,8 +46,14 @@ y_test = y_labels[test_idx]
 # 1.
 
 # a.
+θ = scy.loadmat('/workspaces/python/week6/input/HW6_weights_3_full.mat')
+θ1 = θ['Theta1']
+θ2 = θ['Theta2']
 
 p, h_x = predict.predict(θ1, θ2, X)
+
+acc = np.mean(p == y_labels) * 100
+print(f"prediction accuracy: {acc:.2f}%")
 
 
 
