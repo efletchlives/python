@@ -4,12 +4,15 @@ import random
 import matplotlib.pyplot as plot
 import os
 
+# functions
 import predict
 import nnCost
+import sigmoidGradient
+import sGD
 
 vehicles = ['Airplane','Automobile','Truck']
 
-# question 0
+# question 0: done
 data = scy.loadmat('/workspaces/python/week6/input/HW6_Data2_full.mat')
 
 # a.
@@ -44,7 +47,7 @@ y_train = y_labels[train_idx]
 X_test = X[test_idx]
 y_test = y_labels[test_idx]
 
-# 1.
+# question 1: done
 
 # a.
 θ = scy.loadmat('/workspaces/python/week6/input/HW6_weights_3_full.mat')
@@ -57,10 +60,29 @@ acc = np.mean(p == y_labels) * 100
 print(f"prediction accuracy: {acc:.2f}%")
 
 
-# 2. 
+# question 2: done
 # a.
+K = 3
+λ = [0.1,1,2]
 
-J = nnCost.nnCost(θ1, θ2, X, y, K, λ)
+for i in range(3):
+    J = nnCost.nnCost(θ1, θ2, X, y_labels, K, λ[i])
+    print(f"the cost for λ = {λ[i]}: {J}") 
 
+
+# question 3: done
+z = np.array([-10,0,10]).T
+g_prime = sigmoidGradient.sigmoidGradient(z)
+print(f'the sigmoid gradient when z=[-10,0,10]\': {g_prime}')
+
+# question 4: 
+input_layer_size = 1024
+hidden_layer_size = 40
+num_labels = 3
+λ = 0.1
+alpha = 0.10
+MaxEpochs = 50
+
+θ1, θ2 = sGD.sGD(input_layer_size, hidden_layer_size, num_labels, X_train, y_train, λ, alpha, MaxEpochs)
 
 
