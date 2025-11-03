@@ -3,6 +3,7 @@ import scipy.io as scy
 import random
 import matplotlib.pyplot as plot
 import os
+import time
 
 # functions
 import predict
@@ -80,9 +81,28 @@ input_layer_size = 1024
 hidden_layer_size = 40
 num_labels = 3
 λ = 0.1
-alpha = 0.10
+alpha = 0.01
 MaxEpochs = 50
 
+start_time = time.time()
 θ1, θ2 = sGD.sGD(input_layer_size, hidden_layer_size, num_labels, X_train, y_train, λ, alpha, MaxEpochs)
+end_time = time.time()
+
+J = nnCost.nnCost(θ1, θ2, X_train, y_train, num_labels, λ)
+print(f'cost after 50 epochs: {J}')
+print(f'time to run 50 epochs: {end_time-start_time}')
+
+
+
+# question 5:
+λ = [0.01, 0.1, 0.2, 1]
+MaxEpochs = [50,300]
+
+for num_epochs in MaxEpochs:
+    for i in λ:
+        θ1, θ2 = sGD.sGD(input_layer_size, hidden_layer_size, num_labels, X_train, y_train, i, alpha, num_epochs)
+        
+
+
 
 

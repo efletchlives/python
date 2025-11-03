@@ -13,6 +13,10 @@ def nnCost(θ1, θ2, X, y, K, λ):
         y_vec[i,y[i]-1] = 1 # puts 1 at the corresponding spot in the vector
     y = y_vec
 
+    # for divide by zero errors
+    epsilon = 1e-8
+    h_x = np.clip(h_x, epsilon, 1-epsilon)
+
     cost = -(1/m) * np.sum(y * np.log(h_x) + (1 - y) * np.log(1 - h_x)) # cost w/o regularization
     reg = λ/(2*m) * (np.sum(θ1[:,1:] ** 2) + np.sum(θ2[:,1:] ** 2)) # regularization
 
