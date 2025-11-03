@@ -85,23 +85,49 @@ alpha = 0.01
 MaxEpochs = 50
 
 start_time = time.time()
-θ1, θ2 = sGD.sGD(input_layer_size, hidden_layer_size, num_labels, X_train, y_train, λ, alpha, MaxEpochs)
+θ1, θ2, costs = sGD.sGD(input_layer_size, hidden_layer_size, num_labels, X_train, y_train, λ, alpha, MaxEpochs)
 end_time = time.time()
 
 J = nnCost.nnCost(θ1, θ2, X_train, y_train, num_labels, λ)
 print(f'cost after 50 epochs: {J}')
 print(f'time to run 50 epochs: {end_time-start_time}')
 
+plot.figure(figsize=(10, 6))
+plot.plot(range(1, MaxEpochs+1), costs, 'b-', linewidth=2, marker='o', markersize=4)
+plot.xlabel('Epoch', fontsize=12)
+plot.ylabel('Cost', fontsize=12)
+plot.title(f'Training Cost vs Epoch (λ={λ}, α={alpha})', fontsize=14)
+plot.grid(True, alpha=0.3)
+plot.tight_layout()
+plot.savefig('/workspaces/python/week6/output/ps6-4-e-1.png')
+plot.close()
 
 
 # question 5:
 λ = [0.01, 0.1, 0.2, 1]
 MaxEpochs = [50,300]
 
+results = {}
+
 for num_epochs in MaxEpochs:
     for i in λ:
-        θ1, θ2 = sGD.sGD(input_layer_size, hidden_layer_size, num_labels, X_train, y_train, i, alpha, num_epochs)
-        
+        θ1, θ2, costs = sGD.sGD(input_layer_size, hidden_layer_size, num_labels, X_train, y_train, i, alpha, num_epochs)
+
+        # calculate training accuracy
+        p_train , _ = predict.predict(θ1, θ2, X_train)
+        train_acc = np.mean(p_train == y_train) * 100
+
+        # calculate testing accuracy
+        p_test, _ = predict.predict(θ1, θ2, X_test)
+        test_acc = np.mean(p_test == y_test) * 100
+
+        # calculate final cost
+        final_cost = nnCost.nnCost(θ1, θ2, X_train, y_train, num_labels, i)
+
+        results[(i, num_epochs)] = {train_acc, test_acc, final_cost}
+        print(f'training accuracy (λ = {i}, max epochs = {num_epochs}): {train_acc:.2f}')
+        print(f'testing accuracy (λ = {i}, max epochs = {num_epochs}): {test_acc:.2f}')
+        print(f'final cost (λ = {i}, max epochs = {num_epochs}): {final_cost:.2f}\n')    
 
 
 
