@@ -81,7 +81,7 @@ input_layer_size = 1024
 hidden_layer_size = 40
 num_labels = 3
 λ = 0.1
-alpha = 0.01
+alpha = 0.001
 MaxEpochs = 50
 
 start_time = time.time()
@@ -92,6 +92,7 @@ J = nnCost.nnCost(θ1, θ2, X_train, y_train, num_labels, λ)
 print(f'cost after 50 epochs: {J}')
 print(f'time to run 50 epochs: {end_time-start_time}')
 
+# figure of costs vs iterations
 plot.figure(figsize=(10, 6))
 plot.plot(range(1, MaxEpochs+1), costs, 'b-', linewidth=2, marker='o', markersize=4)
 plot.xlabel('Epoch', fontsize=12)
