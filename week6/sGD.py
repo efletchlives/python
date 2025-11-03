@@ -46,11 +46,11 @@ def sGD(input_layer_size, hidden_layer_size, num_labels, X_train, y_train, λ, a
             # update θ values
             θ1 -= alpha * D1
             θ2 -= alpha * D2
-        print(f'epoch {epoch+1}/{MaxEpochs}',end=" ")
+        # print(f'epoch {epoch+1}/{MaxEpochs}',end=" ")
 
         J = nnCost.nnCost(θ1, θ2, X_train, y_train, num_labels, λ)
         costs.append(J)
-    print('\n')
+    # print('\n')
 
     return θ1, θ2, costs
     

@@ -104,6 +104,7 @@ plot.close()
 
 
 # question 5:
+start_time = time.time()
 λ = [0.01, 0.1, 0.2, 1]
 MaxEpochs = [50,300]
 
@@ -129,6 +130,9 @@ for num_epochs in MaxEpochs:
         print(f'testing accuracy (λ = {i}, max epochs = {num_epochs}): {test_acc:.2f}')
         print(f'final cost (λ = {i}, max epochs = {num_epochs}): {final_cost:.2f}\n')    
 
+end_time = time.time()
+
+print(f'question 5 time running: {end_time-start_time}')
 
 
 
