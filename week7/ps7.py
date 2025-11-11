@@ -181,7 +181,7 @@ for K in range(1,11): # K = 1:10
         for j in range(0,192-32,stride):
             img = imgs_test[K-1]
             window = img[i:i+96, j:j+32]
-            window = np.expand_dims(window, axis=0)
+            window = np.expand_dims(window, axis=0) # for separating RGB 
 
             prob = model.predict(window, verbose=0)[0][0]
 
