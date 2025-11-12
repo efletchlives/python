@@ -166,7 +166,7 @@ model = tf.keras.Sequential([
 
 model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
 model.summary()
-trained_model = model.fit(imgs_train, y_train, epochs=10, batch_size=16, verbose=1)
+trained_model = model.fit(imgs_train, y_train, epochs=5, batch_size=16, verbose=1)
 
 
 i_max, j_max = -1,-1 # holds top left corner of the window with highest probability of car being there
@@ -191,6 +191,7 @@ for K in range(1,11): # K = 1:10
     
     if(max_prob > thres):
         img[i_max:i_max+96,j_max:j_max+32] = blue
+    print(f'save photo {K}')
     img = np.clip(img, 0, 255).astype(np.uint8)
     matimg.imsave(f'/workspaces/python/week7/output/ps7-2-c-{K}.png',img) # saves image with window of highest probability of car
 
