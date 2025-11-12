@@ -175,7 +175,7 @@ blue = (0,0,255)
 thres = 0.7
 
 # nested for loop for sliding window
-for K in range(1,11): # K = 1:10
+for K in range(6,11): # K = 1:10
     max_prob = 0 # holds max probability per img
     for i in range(0,192-96,stride):
         for j in range(0,192-32,stride):
@@ -190,7 +190,12 @@ for K in range(1,11): # K = 1:10
                 i_max, j_max = i,j
     
     if(max_prob > thres):
-        img[i_max:i_max+96,j_max:j_max+32] = blue
+        img[i_max,j_max:j_max+32] = blue # top edge
+        img[i_max+95,j_max:j_max+32] = blue # bottom edge
+
+        img[i_max:i_max+96, j_max] = blue # left edge
+        img[i_max:i_max+96, j_max+31] = blue # right edge
+
     print(f'save photo {K}')
     img = np.clip(img, 0, 255).astype(np.uint8)
     matimg.imsave(f'/workspaces/python/week7/output/ps7-2-c-{K}.png',img) # saves image with window of highest probability of car
