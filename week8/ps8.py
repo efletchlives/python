@@ -5,7 +5,7 @@ import matplotlib.pyplot as plot
 
 # question 1
 # a.
-digits = scy.loadmat('/workspaces/python/week8/input/HW8_data1.mat')
+digits = scy.loadmat(r'C:\Users\eflet\repos\python\week8\input\HW8_data1.mat')
 X = digits['X']
 y = digits['y']
 
@@ -21,14 +21,14 @@ for i in range(4):
         arr[i, j].imshow(img, cmap='gray')
         arr[i, j].axis('off')
 
-plot.savefig('/workspaces/python/week8/output/ps8-1-a-1.png')
+plot.savefig(r'C:\Users\eflet\repos\python\week8\output\ps8-1-a-1.png')
 
 # b. 
 idx = np.random.permutation(range(5000))
 X_train = X[idx[:4300]]
-y_train = y[idx[:4300]]
+y_train = y[idx[:4300]]-1
 X_test = X[idx[4300:5000]]
-y_test = y[idx[4300:5000]]
+y_test = y[idx[4300:5000]]-1
 
 # c.
 idx1 = np.random.choice(len(X_train),size=1250, replace=True)
@@ -129,9 +129,8 @@ print('accuracy of logistic regression on testing set:',accuracy_score(y_test,y_
 import tensorflow as tf
 
 nn = tf.keras.Sequential([
-    tf.keras.Sequential.Flatten(input_shape=(20,20)),
-    tf.keras.Sequential.Dense(128, activation='relu'),
-    tf.keras.Sequential.Dense(10, activation='softmax')
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
     ])
 nn.compile(optimizer='adam',loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 nn.fit(X4,y4,epochs=10)
@@ -154,3 +153,56 @@ print('accuracy of neural network on training set (X5):',accuracy_score(y5,y_pre
 # iii.
 y_pred = knn.predict(X_test)
 print('accuracy of neural network on testing set:',accuracy_score(y_test,y_pred),'\n')
+
+
+# h. random forest 
+from sklearn.ensemble import RandomForestClassifier
+
+rf = RandomForestClassifier(n_estimators=12)
+rf.fit(X5,y5)
+
+# i.
+print('random forest accuracies:')
+y_pred = knn.predict(X5)
+print('accuracy of random forest on training set (X5):',accuracy_score(y5,y_pred))
+
+# ii.
+y_pred = knn.predict(X1)
+print('accuracy of random forest on training set (X1):',accuracy_score(y1,y_pred))
+y_pred = knn.predict(X2)
+print('accuracy of random forest on training set (X2):',accuracy_score(y2,y_pred))
+y_pred = knn.predict(X3)
+print('accuracy of random forest on training set (X3):',accuracy_score(y3,y_pred))
+y_pred = knn.predict(X4)
+print('accuracy of random forest on training set (X4):',accuracy_score(y4,y_pred))
+
+# iii.
+y_pred = knn.predict(X_test)
+print('accuracy of random forest on testing set:',accuracy_score(y_test,y_pred),'\n')
+
+
+# i.
+from scipy import stats
+svm_pred = svm.predict(X_test)
+knn_pred = knn.predict(X_test)
+log_pred = log_reg.predict(X_test)
+nn_pred = np.argmax(nn.predict(X_test), axis=1) # convert from probabilities to class labels
+rf_pred = rf.predict(X_test)
+
+all_pred = np.vstack([svm_pred, knn_pred, log_pred, nn_pred, rf_pred])
+all_pred, _ = stats.mode(all_pred, axis=0) # take the mode to get majority voting rule prediction
+
+print('\naccuracy of ensemble on testing set:', accuracy_score(y_test,all_pred),'\n')
+
+
+# j. 
+# the SVM has the best accuracy hanging in the range of 90%/98%. the KNN, logistic regression, neural network, and random forest models stay close to 90%
+# bagging does not really help in this case because each model hangs around the same range anyways. 
+
+
+# ------------------------------------------------------------------------------------------------------------------------
+# 2. 
+
+
+
+
