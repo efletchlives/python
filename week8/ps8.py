@@ -207,29 +207,30 @@ from segment_kmeans import kmeans
 
 
 im1 = Image.open(r'C:\Users\eflet\repos\python\week8\input\photos\im1.jpg')
-im1 = np.array(im1)
-im2 = Image.open(r'C:\Users\eflet\repos\python\week8\input\photos\im2.jpg')
-im2 = np.array(im2)
-im3 = Image.open(r'C:\Users\eflet\repos\python\week8\input\photos\im3.png')
-im3 = np.array(im3)
-
-im1 = im1.astype(float)/255.0
-im2 = im2.astype(float)/255.0
-im3 = im3.astype(float)/255.0
-
 im1 = im1.resize((100,100))
+im1 = np.array(im1).astype(float)/255.0
+
+im2 = Image.open(r'C:\Users\eflet\repos\python\week8\input\photos\im2.jpg')
 im2 = im2.resize((100,100))
+im2 = np.array(im2).astype(float)/255.0
+
+im3 = Image.open(r'C:\Users\eflet\repos\python\week8\input\photos\im3.png')
 im3 = im3.resize((100,100))
+im3 = np.array(im3).astype(float)/255.0
 
 K = [3,5,7]
 iters = [7,15,25]
 R = [5,8,12]
 for i in range(3):
     im1_out = kmeans(im1, K[i], iters[i], R[i])
-    plot.imsave(f'C:/Users/eflet/repos/python/week8/output/photos/im1_{K[i]}_{iters[i]}_{R[i]}.png',im1_out)
+    im1_out = (im1_out * 255).astype(np.uint8)
+    plot.imsave(f'C:/Users/eflet/repos/python/week8/output/photos/im1_{K[i]}_{iters[i]}_{R[i]}.png', im1_out)
+    
     im2_out = kmeans(im2, K[i], iters[i], R[i])
-    plot.imsave(f'C:/Users/eflet/repos/python/week8/output/photos/im2_{K[i]}_{iters[i]}_{R[i]}.png',im2_out)
+    im2_out = (im2_out * 255).astype(np.uint8)
+    plot.imsave(f'C:/Users/eflet/repos/python/week8/output/photos/im2_{K[i]}_{iters[i]}_{R[i]}.png', im2_out)
+    
     im3_out = kmeans(im3, K[i], iters[i], R[i])
-    plot.imsave(f'C:/Users/eflet/repos/python/week8/output/photos/im3_{K[i]}_{iters[i]}_{R[i]}.png',im3_out)
-
+    im3_out = (im3_out * 255).astype(np.uint8)
+    plot.imsave(f'C:/Users/eflet/repos/python/week8/output/photos/im3_{K[i]}_{iters[i]}_{R[i]}.png', im3_out)
 
