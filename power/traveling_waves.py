@@ -1,8 +1,10 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import tw_functions 
 # constants
 π = np.pi
 ε0 = 8.85e-12
+V_rated = 500 # kV
 
 # specs: 4 subconductors per bundle
 N = 4 # subconductors
@@ -34,11 +36,15 @@ Zs = np.sqrt(Xa/Ba)
 gamma = np.sqrt(Za*Ya)
 Zc = np.sqrt(Za/Ya)
 
+# SIL calculation
+SIL = (V_rated)**2/Zs
+pf = 0.98
+theta = -np.arccos(pf)
+
 
 # ----------------------------- main code ---------------------------------------
 
-# model = input('what model do you want to use?\n1: long line (250mi)\n2: medium line (100 mi)\n3: short line (10 mi)\n-> ')
-model = '1'
+model = input('what model do you want to use?\n1: long line (250mi)\n2: medium line (100 mi)\n3: short line (10 mi)\n-> ')
 if(model == '1'):
     # long line
     print('---------------- long line -----------------')
@@ -63,6 +69,9 @@ if(model == '1'):
     D = A
     B = 1j*Zc*np.sinh(gamma*l)
     C = 1j*(1/Zc)*np.sinh(gamma*l)
+
+    Z = 1j*Zs*np.sin(beta*l)
+    Y = 2*(A-1)/Z
 
     actual = []
     actual.append(A)
@@ -89,8 +98,72 @@ if(model == '1'):
     print(f'| {errors[0]*100:.3f}% {errors[1]*100:.3f}% |')
     print(f'| {errors[2]*100:.3f}% {errors[3]*100:.3f}% |')
 
-model = '2'
-if(model == '2'):
+    # -------------------- plot voltage profile --------------------------
+    # SIL
+    V_r = V_rated
+    S_r = SIL * (pf + 1j*np.sin(theta))
+    I_r = np.conj(S_r/V_r)
+
+    distances = np.linspace(1, l, 100)
+    voltages = []
+
+    for d in distances:
+        V_s = V_r * np.cosh(gamma*d) + I_r * Zc * np.sinh(gamma*d)
+        voltages.append(abs(V_s))
+
+    plt.figure()
+    plt.plot(distances,voltages)
+    plt.xlabel('distance from receiving end (miles)')
+    plt.ylabel('voltage magnitude (p.u.)')
+    plt.title('voltage profile (Pr = SIL)')
+    plt.savefig(r'C:\Users\eflet\OneDrive - University of Pittsburgh\Pitt\python\cloned_repo\python\power\long_line_Pr=SIL.png')
+
+    # 1.3 SIL 
+    V_r = V_rated
+    S_r = 1.3*SIL * (pf + 1j*np.sin(theta))
+    I_r = np.conj(S_r/V_r)
+
+    distances = np.linspace(1, l, 100)
+    voltagesfourthirds = []
+
+    for d in distances:
+        V_s = V_r * np.cosh(gamma*d) + I_r * Zc * np.sinh(gamma*d)
+        voltagesfourthirds.append(abs(V_s))
+
+    plt.figure()
+    plt.plot(distances,voltagesfourthirds)
+    plt.xlabel('distance from receiving end (miles)')
+    plt.ylabel('voltage magnitude (p.u.)')
+    plt.title('voltage profile (Pr = 4/3*SIL)')
+    plt.savefig(r'C:\Users\eflet\OneDrive - University of Pittsburgh\Pitt\python\cloned_repo\python\power\long_line_Pr=fourthirdsSIL.png')
+
+    # 1/2 SIL 
+    V_r = V_rated
+    S_r = 1/2*SIL * (pf + 1j*np.sin(theta))
+    I_r = np.conj(S_r/V_r)
+
+    distances = np.linspace(1, l, 100)
+    voltages_halfSIL = []
+
+    for d in distances:
+        V_s = V_r * np.cosh(gamma*d) + I_r * Zc * np.sinh(gamma*d)
+        voltages_halfSIL.append(abs(V_s))
+
+    plt.figure()
+    plt.plot(distances,voltages_halfSIL)
+    plt.xlabel('distance from receiving end (miles)')
+    plt.ylabel('voltage magnitude (p.u.)')
+    plt.title('voltage profile (Pr = 1/2*SIL)')
+    plt.savefig(r'C:\Users\eflet\OneDrive - University of Pittsburgh\Pitt\python\cloned_repo\python\power\long_line_Pr=halfSIL.png')
+
+
+    # capacitive, reactive power compensation
+    tw_functions.cap_power_compensation(Z,Y,Zc)
+    tw_functions.react_power_compensation(Z,Y,Zc)
+
+
+
+elif(model == '2'):
     # medium line
     print('---------------- medium line -----------------')
     l = 100 # mi
@@ -145,8 +218,8 @@ if(model == '2'):
     print(f'| {errors[0]*100:.3f}% {errors[1]*100:.3f}% |')
     print(f'| {errors[2]*100:.3f}% {errors[3]*100:.3f}% |')
 
-model = '3'
-if(model == '3'):
+
+elif(model == '3'):
     # short line
     print('---------------- short line -----------------')
     l = 10 # mi
@@ -205,6 +278,12 @@ if(model == '3'):
     print('\nerrors in ABCD parameters:')
     print(f'| {errors[0]*100:.3f}% {errors[1]*100:.3f}% |')
     print(f'| {errors[2]*100:.3f}% {errors[3]*100:.3f}% |')
+
+
+
+
+    
+
 
 
 
