@@ -42,5 +42,5 @@ def pu_values(z_actual, y_actual):
     Y_base = 1/Z_base
 
     z_pu = z_actual/Z_base
-    y_pu = y_actual * Z_base
+    y_pu = y_actual*1e-6 * Z_base
     return z_pu, y_pu
