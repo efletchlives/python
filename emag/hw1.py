@@ -6,11 +6,11 @@ r = 2600 # ohms
 
 # f(x) = a*cos(bx + c) + d
 # a. find period
-T = (2*np.pi)/(30*np.pi*10e-3) # seconds
+T = (2*np.pi)/(0.03*np.pi) # seconds
 print(f'period is {T:.2f} sec')
 
 t = np.linspace(0,5*T,1000) # seconds
-v = 1.3*np.cos(30*np.pi*10e-3*t) # mV
+v = 1.3*np.cos(0.03*np.pi*t) # mV
 
 # b. calculate current
 i = (v*10e3)/r # uA
@@ -21,7 +21,7 @@ p = i*v # nW
 # d. energy consumed by resistor in 0.54 periods starting at t = 0
 # E = p*t
 
-E = 1.3*np.cos(30*np.pi*10e-3*0.54*T) * (1.3/2600)*np.cos(30*np.pi*10e-3*0.54*T) * 0.54*T
+E = 1.3*np.cos(0.03*np.pi*0.54*T) * (1.3/2600)*np.cos(0.03*np.pi*0.54*T) * 0.54*T
 print(f'the energy consumed in 0.54 periods = {E}')
 
 
